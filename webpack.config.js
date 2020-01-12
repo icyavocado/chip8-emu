@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = env => {
   return {
-    entry: "./src/index.js",
+    entry: "./src/js/main.js",
     output: {
       filename: "bundle.js",
       path: path.resolve(__dirname, "dist")
@@ -17,11 +17,27 @@ module.exports = env => {
     },
     module: {
       rules: [
-        { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
         {
-          test: /\.css$/,
+          test: /\.m?js$/,
+          exclude: /(node_modules)/,
+          use: {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"]
+            }
+          }
+        },
+        {
+          test: /\.s[ac]ss$/i,
           exclude: /node_modules/,
-          use: [MiniCssExtractPlugin.loader, "css-loader"]
+          use: [
+            // Creates `style` nodes from JS strings
+            "style-loader",
+            // Translates CSS into CommonJS
+            "css-loader",
+            // Compiles Sass to CSS
+            "sass-loader"
+          ]
         },
         {
           test: /\.(ch8)$/i,
@@ -44,6 +60,12 @@ module.exports = env => {
           ]
         }
       ]
+    },
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "src/"),
+        RES: path.resolve(__dirname, "src/res/")
+      }
     },
     plugins: [
       new CleanWebpackPlugin(),
