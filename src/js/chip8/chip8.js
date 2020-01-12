@@ -1,6 +1,6 @@
 const Display = require("./display");
 const Keyboard = require("./keyboard");
-const beepWav = require("./res/sounds/beep-01a.wav");
+const beepWav = require("RES/sounds/beep-01a.wav");
 
 class Chip8 {
   constructor(el, { chip = {}, display = {} }) {
@@ -66,6 +66,7 @@ class Chip8 {
     this.sp = 0;
 
     this.resetTimer();
+    this.unmute();
 
     this.halt = false;
 
@@ -80,6 +81,12 @@ class Chip8 {
   }
   resume() {
     this.halt = false;
+  }
+  muted() {
+    this.beepSound.muted = true;
+  }
+  unmute() {
+    this.beepSound.muted = false;
   }
   resetTimer() {
     this.delay_timer = 0;
