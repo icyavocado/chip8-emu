@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
-    "swiper": "^5.2.1"
+    "swiper": "^6.5.1"
   }
 }
